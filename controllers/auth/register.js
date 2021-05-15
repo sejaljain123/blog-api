@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../../models/user');
 
 const handleRegister = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
