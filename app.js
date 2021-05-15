@@ -1,13 +1,16 @@
-var express = require('express');
-var database = require('./database');
-var userRouter = require('./routes/users');
-var app = express();
-database.connect();
-app.use(express.json());
-app.use('/', userRouter);
+const express = require('express');
+const database = require('./database');
+const userRouter = require('./routes/users');
+require('dotenv').config();
+const app = express();
 
-app.listen(5000, () => {
-  console.log('app is running');
-});
+const start = async () => {
+  await database.connect();
+  app.use(express.json());
+  app.use('/', userRouter);
 
-module.exports = app;
+  app.listen(5000, () => {
+    console.log('app is running');
+  });
+};
+start();
