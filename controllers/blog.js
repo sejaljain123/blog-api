@@ -6,10 +6,28 @@ const create_blog = async (req, res) => {
     description: req.body.description,
     content: req.body.contnet,
     created_at: req.body.created_at,
-    created_by: req.body.created_by,
+    created_by: req.body.user_id,
   });
-  await blog.save();
-  res.send(blog);
+  await blog
+    .save()
+    .then((blog) => {
+      if (blog) {
+        res.status(201).json({
+          mesaage: 'Post added',
+          blog: {
+            id: blog._id,
+          },
+        });
+      } else {
+        res.status(404).json({
+          message: 'Error Adding post',
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(error);
+      res.status(501).json({ message: 'Error Adding Post' });
+    });
 };
 
 const display_blog = async (req, res) => {
