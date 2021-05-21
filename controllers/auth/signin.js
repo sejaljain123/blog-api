@@ -6,6 +6,7 @@ const handleSignin = async (req, res) => {
   const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
 
   res.json({
+    user,
     message: 'login successfull',
     token,
   });

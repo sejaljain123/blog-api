@@ -32,7 +32,7 @@ const create_blog = async (req, res) => {
 
 const display_blog = async (req, res) => {
   const posts = await Blog.find({}).populate('created_by');
-  res.send(posts);
+  res.json({ posts, message: 'display posts' });
 };
 
 const display_blog_byId = async (req, res) => {
