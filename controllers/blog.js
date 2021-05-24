@@ -5,9 +5,9 @@ const create_blog = async (req, res) => {
   let blog = new Blog({
     title: req.body.title,
     description: req.body.description,
-    content: req.body.contnet,
+    content: req.body.content,
     created_at: req.body.created_at,
-    created_by: req.body.user_id,
+    created_by: req.body.created_by,
   });
   await blog
     .save()
@@ -26,7 +26,7 @@ const create_blog = async (req, res) => {
       }
     })
     .catch((err) => {
-      console.log(error);
+      console.log(err);
       res.status(501).json({ message: 'Error Adding Post' });
     });
 };
