@@ -1,3 +1,4 @@
+const { request } = require('express');
 const Blog = require('../models/blog');
 
 const create_blog = async (req, res) => {
@@ -39,8 +40,21 @@ const display_blog_byId = async (req, res) => {
   const posts = await Blog.findById(req.params.id);
   res.send(posts);
 };
+const delete_post = async (req, res) => {
+  await Blog.findOneAndDelete({ _id: req.params.id }, function (err, post) {
+    if (err) {
+      return next(err);
+    }
+    if (!post) {
+      return res.json({ message: 'Post does not exist!' });
+    }
+    return res.json({ message: 'post deleted' });
+  });
+};
+
 module.exports = {
   create_blog,
   display_blog,
   display_blog_byId,
+  delete_post,
 };

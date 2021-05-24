@@ -5,4 +5,5 @@ var Blog = require('../controllers/blog');
 router.get('/create', auth, Blog.create_blog);
 router.get('/display', auth, Blog.display_blog);
 router.get('/display/:id', auth, Blog.display_blog_byId);
+router.delete('/delete/:id', auth, Blog.delete_post);
 module.exports = router;
