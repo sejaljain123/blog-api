@@ -9,7 +9,10 @@ const handleRegister = async (req, res) => {
     password: req.body.password,
   });
   await user.save();
-  res.send(user);
+  res.json({
+    message: 'successfully added',
+    user,
+  });
 };
 
 module.exports = {

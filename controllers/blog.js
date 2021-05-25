@@ -1,4 +1,3 @@
-const { request } = require('express');
 const Blog = require('../models/blog');
 
 const create_blog = async (req, res) => {
@@ -7,17 +6,16 @@ const create_blog = async (req, res) => {
     description: req.body.description,
     content: req.body.content,
     created_at: req.body.created_at,
-    created_by: req.body.created_by,
+    created_by: req.decodedToken.userId,
   });
+
   await blog
     .save()
     .then((blog) => {
       if (blog) {
         res.status(201).json({
           mesaage: 'Post added',
-          blog: {
-            id: blog._id,
-          },
+          blog,
         });
       } else {
         res.status(404).json({
@@ -34,6 +32,10 @@ const create_blog = async (req, res) => {
 const display_blog = async (req, res) => {
   const posts = await Blog.find({}).populate('created_by');
   res.json({ posts, message: 'display posts' });
+};
+const display_userblog = async (req, res) => {
+  const posts = await Blog.findOne({ _id: req.decodedToken }).populate('created_by');
+  res.json({ posts });
 };
 
 const display_blog_byId = async (req, res) => {
@@ -57,4 +59,5 @@ module.exports = {
   display_blog,
   display_blog_byId,
   delete_post,
+  display_userblog,
 };
