@@ -9,12 +9,4 @@ const userSchema = new Schema({
   password: { type: String, required: true },
 });
 
-userSchema.pre('save', function (next) {
-  const user = this;
-  bcrypt.hash(user.password, 10, function (error, encrypted) {
-    user.password = encrypted;
-    next();
-  });
-});
-
 module.exports = mongoose.model('user', userSchema);
