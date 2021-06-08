@@ -1,8 +1,9 @@
 const Blog = require('../models/blog');
-
+const Mongoose = require('mongoose');
 
 const display_blog = async (req, res) => {
   const posts = await Blog.find({}).populate('created_by');
+
   res.json({ posts, message: 'display posts' });
 };
 const create_blog = async (req, res) => {
@@ -44,13 +45,10 @@ const read_blog = async (req, res) => {
 
 const user_blog = async (req, res) => {
   const posts = await Blog.find({
-    created_by: req.decodedToken.userId,
+    created_by: Mongoose.Types.ObjectId(req.decodedToken.userId),
   }).populate('created_by');
 
   res.json({ posts, message: 'Posts' });
-
-  // if (req.decodedToken.userId === String(post.created_by)) {
-  // }
 };
 
 const update_blog = async (req, res) => {

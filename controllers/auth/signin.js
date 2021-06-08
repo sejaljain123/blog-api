@@ -17,7 +17,7 @@ const handleSignin = async (req, res) => {
         token,
       });
     } else {
-      res.json('Wrong Credentials');
+      res.json({ success: false, message: 'Wrong Credentials' });
     }
   }
 };
