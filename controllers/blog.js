@@ -1,5 +1,6 @@
-const { TokenExpiredError } = require('jsonwebtoken');
 const Blog = require('../models/blog');
+
+
 const display_blog = async (req, res) => {
   const posts = await Blog.find({}).populate('created_by');
   res.json({ posts, message: 'display posts' });
@@ -42,7 +43,9 @@ const read_blog = async (req, res) => {
 };
 
 const user_blog = async (req, res) => {
-  const posts = await Blog.find({ created_by: req.decodedToken.userId }).populate('created_by');
+  const posts = await Blog.find({
+    created_by: req.decodedToken.userId,
+  }).populate('created_by');
 
   res.json({ posts, message: 'Posts' });
 
