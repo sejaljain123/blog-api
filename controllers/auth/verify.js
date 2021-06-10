@@ -1,6 +1,12 @@
 const verify = (req, res) => {
-  res.status(200).json({ success: true });
+  try {
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.log(err);
+    res.status(501).json({ message: 'Error' });
+  }
 };
+
 module.exports = {
   verify,
 };

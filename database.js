@@ -14,6 +14,7 @@ const connect = async () => {
     return;
   }
 };
+
 module.exports = {
   connect,
 };

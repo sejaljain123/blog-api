@@ -4,6 +4,7 @@ const userRouter = require('./routes/users');
 const blogRouter = require('./routes/blog');
 const cors = require('cors');
 require('dotenv').config();
+
 const app = express();
 
 const start = async () => {
@@ -19,4 +20,5 @@ const start = async () => {
     console.log(`app is running on port ${process.env.PORT}`);
   });
 };
+
 start();
