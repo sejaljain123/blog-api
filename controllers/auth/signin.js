@@ -6,20 +6,19 @@ const handleSignin = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
-    if (!user) return res.status(400).json('invalid email or password');
+    if (!user)
+      return res.status(400).json({ success: false, message: 'invalid email or password' });
 
     if (user) {
       const cmp = await bcrypt.compare(req.body.password, user.password);
       if (cmp) {
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
-        res.json({
+        return res.json({
           success: true,
           user,
           message: 'login successfull',
           token,
         });
-      } else {
-        res.json({ success: false, message: 'Wrong Credentials' });
       }
     }
   } catch (err) {
