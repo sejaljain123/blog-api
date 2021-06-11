@@ -6,7 +6,7 @@ const handleSignin = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
-    if (!user) return res.status(400).json({ message: 'invalid email or password' });
+    if (!user) return res.status(400).json({ success: false, message: 'invalid email' });
 
     if (user) {
       const cmp = await bcrypt.compare(req.body.password, user.password);
