@@ -6,15 +6,16 @@ const handleRegister = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send('already exists');
     const hashed = await bcrypt.hash(req.body.password, 10);
-    user = new User({
+    const newuser = new User({
       name: req.body.name,
       email: req.body.email,
       password: hashed,
     });
-    await user.save();
+    await newuser.save();
+    delete newuser.password;
     res.json({
       message: 'successfully added',
-      user,
+      newuser,
     });
   } catch (err) {
     console.log(err);

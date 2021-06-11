@@ -12,6 +12,7 @@ const handleSignin = async (req, res) => {
       const cmp = await bcrypt.compare(req.body.password, user.password);
       if (cmp) {
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
+        delete user.password;
         return res.json({
           success: true,
           user,
